@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, follow">
+
+    <meta name="viewport" content="width=device-width, height=device-height">
+
+    <title>DaNi</title>
+    <link rel="stylesheet"  href="css/themes/default/jquery.mobile-1.3.2.min.css">
+    <link rel="shortcut icon" href="demos/_assets/favicon.ico">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.mobile-1.3.2.min.js"></script>
+	<script src="js/energize.js"></script>
+	<script>
+		function getUrlVars() {
+			var vars = {};
+			var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,    
+			function(m,key,value) {
+			  vars[key] = value;
+			});
+			return vars;
+		}
+
+		function realised()
+		{
+		
+		  $.ajax({
+		  type: "POST",
+		  url: "http://bonuscashfree.com/dani/parfempodaci.php",
+		  data: 'action=realisedaction&id='+document.realizovaporudzbina.id.value,
+		  datatype: "html",
+		  success: function(msg){
+		    alert(msg);
+			window.location.href = 'pregledporudzbina.html?idkorisnika='+document.realizovaporudzbina.idkorisnika.value;
+		  }
+          })
+		}
+	
+		function getBack(){
+			window.location.href = 'pregledporudzbina.html?idkorisnika='+document.realizovaporudzbina.idkorisnika.value;
+		}
+
+	</script>
+
+</head>
+<body >
+
+<form action="" method="post" name="realizovaporudzbina" id="realizovaporudzbina" onsubmit="realised(); return false;" >  
+
+	<div data-role="page" id="realizovaporudzbina">
+				<input type="hidden" name="id" id="id" value="0">
+				<input type="hidden" name="idkorisnika" id="idkorisnika" value="0">
+				<script>	
+						var id = getUrlVars()['idporudzbine'];
+						document.realizovaporudzbina.id.value=id;
+						var idkorisnika = getUrlVars()['idkorisnika'];
+						document.realizovaporudzbina.idkorisnika.value=idkorisnika;
+				</script>
+
+				<div data-role="header" data-position="fixed">
+					<h1>Porudzbina</h1>
+				</div>
+				<div data-role="content">
+					<p>Da li je isporucen parfem?</p>
+				<input type="submit" value="Da" data-icon="check"  data-mini="true" data-theme="e" >
+				<a href="#" onclick="getBack();" data-role="button" data-rel="back" data-theme="e" data-icon="delete"  data-mini="true">Ne</a>
+				</div>	
+	</div>
+	
+
+
+</form>
+
+</body>
+</html>

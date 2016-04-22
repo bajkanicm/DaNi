@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, follow">
+
+    <meta name="viewport" content="width=device-width, height=device-height">
+
+    <title>DaNi</title>
+    <link rel="stylesheet"  href="css/themes/default/jquery.mobile-1.3.2.min.css">
+    <link rel="shortcut icon" href="demos/_assets/favicon.ico">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.mobile-1.3.2.min.js"></script>
+	<script src="js/loading.js"></script>
+	<script src="js/energize.js"></script>
+	<script>
+		
+		function getReport()
+		{
+			window.location.href = "trosakizvestaj.html?id="+document.troskovi.id.value+"&oddatuma="+document.troskovi.oddatuma.value+"&dodatuma="+document.troskovi.dodatuma.value; 
+		}
+	
+		function getBack(){
+			window.location.href = 'listavrstatroskova.html';
+		}
+		
+	</script>
+</head>
+<body >
+
+<form action="" method="post" name="troskovi" id="troskovi" onsubmit="
+getReport();
+return false;" >  
+	
+
+	<!-- page lista parfema -->
+	<div data-role="page" id="listatroskova">
+		
+		<div data-role="header"  data-position="fixed" >
+				<h1>DaNi</h1>
+				
+				
+				<div data-role="navbar" data-iconpos="left">
+					<ul>
+						<li><a href="listakupaca.html" target="_self" data-icon="home"   data-transition="pop" >Home</a></li>
+						<li><a href="listaaktivnihkupaca.html"   data-icon="user" target="_self" data-transition="pop">Aktivni</a></li>
+						<li><a href="listavrstaparfema.html" target="_self" data-icon="shop"   >Parfemi</a></li>
+						<li><a href="preglednabavki.html" target="_self" data-icon="bars">Nabavka</a></li>
+						<li><a href="crnalista.html" target="_self" data-icon="alert">Crna Lista</a></li>
+						<li><a href="rashod.html" target="_self" data-icon="info" class="ui-btn-active" >Rashod</a></li>
+					</ul>
+				</div>
+				<a href="#opcijetrosak" data-rel="popup" data-position-to="window" data-role="button" data-inline="true" data-transition="slidedown" data-icon="gear" data-iconpos="right" class="ui-btn-right">Options</a>
+		</div><!-- /header -->
+		<div data-role="popup" id="opcijetrosak">
+				<ul data-role="listview" data-inset="true" data-theme="b">					
+					<ul data-role="listview" data-inset="true" data-theme="b">					
+					<li><a href="dnevniizvestaj.html" target="_self">Dnevni Izvestaj</a></li>
+					<li><a href="listavrstatroskova.html" target="_self">Troskovi</a></li>				
+				</ul>
+				</ul>
+		</div>
+		<div data-role="content" id="troskovicontent">
+			<ul data-role="listview">
+				<input type="hidden" name="id" id="id" value="0">
+				
+				<li data-role="fieldcontain">
+					<label for="oddatuma">OD Datuma:</label>
+					<input type="text" placeholder="npr. 01.12.2014" name="oddatuma" id="oddatuma" value="">
+				</li>
+				<li data-role="fieldcontain">
+					<label for="dodatuma">DO Datuma:</label>
+					<input type="text" placeholder="npr. 31.12.2014" name="dodatuma" id="dodatuma" value="">
+				</li>
+				
+				<input type="submit" value="PRIKAZI" data-icon="info" data-iconpos="right" data-mini="true" data-theme="e" >
+				<a href="#" onclick="getBack();" data-role="button" data-theme="e" data-icon="back" data-iconpos="right"  data-mini="true">NAZAD</a>
+				<ul data-role="listview" id="total"  data-inset="true" >
+				</ul>
+				<ul data-role="listview" id="troskovilista"  data-inset="true" >
+				</ul>
+
+				
+				<script>
+					
+					
+
+					function getUrlVars() {
+						var vars = {};
+						var parts = decodeURIComponent(window.location.href).replace(/[?&]+([^=&]+)=([^&]*)/gi,    
+						function(m,key,value) {
+						  vars[key] = value;
+						});
+						return vars;
+					}
+
+
+					var id = getUrlVars()['id'];
+					document.troskovi.id.value = id;
+					var oddatuma = getUrlVars()['oddatuma'];
+					var dodatuma = getUrlVars()['dodatuma'];
+
+					$.ajax({ url: 'http://bonuscashfree.com/dani/settings.php',
+							 data: {action: 'delete_specific_expense',obrisati:getUrlVars()['obrisati']},		
+							 type: 'post',
+							success: function(msg){
+								//deleted
+								if(getUrlVars()['obrisati']>0)
+									window.location.href = "trosakizvestaj.html?id="+id+"&oddatuma="+oddatuma+"&dodatuma="+dodatuma; 
+
+							}
+					});
+					
+					$.ajax({ url: 'http://bonuscashfree.com/dani/settings.php',
+							 data: {action: 'get_specific_expense_total',id:getUrlVars()['id'],oddatuma:getUrlVars()['oddatuma'] ,dodatuma:getUrlVars()['dodatuma']},		
+							 type: 'post',
+							 success: function(data) {
+										
+										
+										obj = JSON.parse(data);
+										var i = 0;
+										
+										$('#total').empty(); 
+										while(i<obj.length){
+											$('#total').append('<li>Total: '+obj[i].total+' EUR</li>');		
+											i = i +1;
+										}
+										
+										$('#total').listview('refresh');
+									  }
+					});
+					
+					$.ajax({ url: 'http://bonuscashfree.com/dani/settings.php',
+							 data: {action: 'get_specific_expense',id:getUrlVars()['id'],oddatuma:getUrlVars()['oddatuma'] ,dodatuma:getUrlVars()['dodatuma']},	
+							 type: 'post',
+							 success: function(data) {
+										//alert(data);
+										obj = JSON.parse(data);
+										var i = 0;
+										$('#troskovilista').empty(); 
+											while(i<obj.length){
+												$('#troskovilista').append('<li><a>'+obj[i].datumTroska+'<span class="ui-li-count"> '+obj[i].vrednost+' EUR</span></a><a href="trosakizvestaj.html?obrisati='+obj[i].id+'&id='+id+'&oddatuma='+oddatuma+'&dodatuma='+dodatuma+'" onclick="if(!confirm(\'Da li ste sigurni da zelite da obrisete trosak?\')) return false;" target="_self"></a> </li>');		
+												i = i +1;
+											}
+											
+											$('#troskovilista').listview('refresh');
+										}
+									 
+					    });
+					
+					
+					
+				</script>
+				
+			</ul>
+			<br><br>
+			
+			
+		</div>
+
+		<div data-role="footer" data-position="fixed"  >
+			<p style="font-size:11px">Powered By ZK</p>				
+		</div><!-- /footer -->
+	</div><!-- /page lista parfema -->
+	
+
+
+</form>
+
+</body>
+</html>

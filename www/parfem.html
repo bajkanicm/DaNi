@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, follow">
+
+    <meta name="viewport" content="width=device-width, height=device-height">
+
+    <title>DaNi</title>
+    <link rel="stylesheet"  href="css/themes/default/jquery.mobile-1.3.2.min.css">
+    <link rel="shortcut icon" href="demos/_assets/favicon.ico">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.mobile-1.3.2.min.js"></script>
+	<script src="js/energize.js"></script>
+	
+
+	<script>
+		
+		//create new parfume
+		function createNew(id,naziv,nalageru,vrsta,tip)
+		{
+		
+			
+			 $.ajax({
+			  type: "POST",
+			  url: "http://bonuscashfree.com/dani/dodajparfem.php",
+			  data: 'id='+id+'&naziv='+naziv+'&nalageru='+nalageru+'&vrsta='+vrsta+'&tip='+tip,
+			  datatype: "html",
+			  success: function(msg){
+				//alert(msg);
+				window.location.href = "listavrstaparfema.html";
+			  }
+			  })
+			
+		
+		}
+
+		function dodajPorudzbinu(id){
+			if(id>0){
+				window.location="biranjekupca.html?idparfema="+id;
+			}
+		}
+
+		function getUrlVars() {
+			var vars = {};
+			var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,    
+			function(m,key,value) {
+			  vars[key] = value;
+			});
+			return vars;
+		}
+
+		
+		
+	</script>
+
+</head>
+<body >
+
+<form action="" method="post" name="create" id="createForm" 
+onsubmit="
+createNew(
+document.create.id.value
+,document.create.naziv.value
+,document.create.nalageru.value
+,document.create.vrsta.value
+,document.create.tip.value
+); return false;">  
+
+
+	<!-- page parfem -->
+	<div data-role="page" id="parfem">
+		<div data-role="header"  data-position="fixed" >
+				<h1>DaNi</h1>
+				
+				
+				<div data-role="navbar" data-iconpos="left">
+					<ul>
+						<li><a href="listakupaca.html" target="_self" data-icon="home"   data-transition="pop" >Home</a></li>
+						<li><a href="listaaktivnihkupaca.html"   data-icon="user" target="_self" data-transition="pop">Aktivni</a></li>
+						<li><a href="listavrstaparfema.html" target="_self" data-icon="shop" class="ui-btn-active" >Parfemi</a></li>
+						<li><a href="preglednabavki.html" target="_self" data-icon="bars">Nabavka</a></li>
+						<li><a href="crnalista.html" target="_self" data-icon="alert">Crna Lista</a></li>
+						<li><a href="rashod.html" target="_self" data-icon="info">Rashod</a></li>
+					</ul>
+				</div>
+				<a href="#opcijeparfem" data-rel="popup" data-position-to="window" data-role="button" data-inline="true" data-transition="slidedown" data-icon="gear" data-iconpos="right" class="ui-btn-right">Options</a>
+		</div><!-- /header -->
+		<div data-role="popup" id="opcijeparfem">
+				<ul data-role="listview" data-inset="true" data-theme="b">					
+					<li><a href="listaparfemaaktivnih.html" target="_self">Lista Parfema</a></li>
+					<li><a href="biranjevrsteparfemadodavanje.html" target="_self" >Dodaj Parfem</a></li>
+					<li><a href="listaparfemaporucena.html" target="_self" >Porucena Lista</a></li>	
+					<li><a href="listaparfemarezervisana.html" target="_self" >Rezervisana Lista</a></li>
+					<li><a href="brojprodatihparfema.html" target="_self" >Broj Prodatih Parfema</a></li>
+					<li><a href="brojparfema.html" target="_self" >Ukupno parfema</a></li>
+				</ul>
+		</div>
+		
+
+		<div data-role="content">
+						
+			<input type="hidden" name="id" id="id" value="0">
+			<input type="hidden" name="vrsta" id="vrsta" value="0">
+			<input type="hidden" name="tip" id="tip" value="0">
+			<script>
+				var id = getUrlVars()['idparfema'];
+				document.create.id.value=id;
+				var vrsta = getUrlVars()['idvrste'];
+				document.create.vrsta.value=vrsta;
+				var tip = getUrlVars()['idtipa'];
+				document.create.tip.value=tip;
+				
+			</script>
+			<ul data-role="listview">
+				
+				<li data-role="fieldcontain">
+					<label for="naziv">Parfem:</label>
+					<input type="text" placeholder="Naziv" name="naziv" id="naziv" value="">
+				</li>
+				<li data-role="fieldcontain">
+					<label for="nalageru">Stanje na lageru:</label>
+					<input type="number" placeholder="Stanje na lageru" name="nalageru" id="nalageru" value="0">
+				</li>
+				
+			</ul>
+			<BR><BR>
+			<input type="submit" value ="PRODAJA" onclick="return dodajPorudzbinu(document.create.id.value);" name="prodaja" id="prodaja" data-icon="star" data-iconpos="right" data-mini="true" data-theme="e"  data-rel="dialog" data-transition="pop">
+			<input type="submit" value="SACUVAJ"  data-icon="arrow-r" data-iconpos="right"  data-theme="e" >
+			
+			
+
+			<script>
+
+				var id = getUrlVars()['idparfema'];
+				if(id>0){
+					document.getElementById("prodaja").disabled = false;
+					$.ajax({ url: 'http://bonuscashfree.com/dani/parfempodaci.php',
+							 data: {action: 'get_parfume_details',id: document.create.id.value},
+							 type: 'post',
+							 success: function(data) {
+										obj = JSON.parse(data);	
+										
+										document.create.naziv.value = obj.naziv;
+										document.create.nalageru.value = obj.nalageru;
+										
+										
+									  }
+					});
+				}else{
+				
+					document.getElementById("prodaja").disabled = true;
+				}
+			</script>
+			
+			<a id='lnkDialog' href="#poruka" data-rel="dialog" data-transition="pop" style='display:none;'>Dodaj</a>
+			
+			
+		</div><!-- /content -->
+
+		<div data-role="footer" data-position="fixed"  >
+			<p style="font-size:11px">Powered By ZK</p>				
+		</div><!-- /footer -->
+	</div><!-- /page parfem -->
+
+	
+
+
+</form>
+
+</body>
+</html>

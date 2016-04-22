@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, follow">
+
+    <meta name="viewport" content="width=device-width, height=device-height">
+
+    <title>DaNi</title>
+    <link rel="stylesheet"  href="css/themes/default/jquery.mobile-1.3.2.min.css">
+    <link rel="shortcut icon" href="demos/_assets/favicon.ico">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.mobile-1.3.2.min.js"></script>
+	<script src="js/energize.js"></script>
+	<script>
+		function createNew()
+		{
+		
+		 i = 0;
+		 //alert(document.list.idparfema.value);
+		 var kolicina = new Array();
+		 var cena = new Array();
+		 var idparfema;
+		 var nameKolicina;
+		 var nameCena;
+		 while(i<document.list.idparfema.value.length){
+			idparfema='';
+			//alert(document.list.idparfema.value[i]);
+			
+			while((document.list.idparfema.value[i] != ',') && (i<document.list.idparfema.value.length)){
+				idparfema = idparfema + document.list.idparfema.value[i];
+				i = i +1;
+			}
+			
+			//alert(idparfema);
+			nameKolicina = 'kolicina';
+			nameCena = 'cena';
+			//if(document.list.idparfema.value[i] != ','){
+				//alert(document.list.idparfema.value[i]);
+			nameKolicina = nameKolicina + idparfema;	
+			nameCena = nameCena + idparfema;
+			kolicina.push(document.getElementById(nameKolicina).value);
+			cena.push(document.getElementById(nameCena).value);
+			//}*/
+			i = i +1;
+		 }
+		 
+		 var nabavka = document.list.idnabavke.value;
+		 //alert(dobavljac);
+		 //alert(kolicina);
+		// alert(cena);
+										
+		 $.ajax({
+		  type: "POST",
+		  url: "http://bonuscashfree.com/dani/dodajnabavku.php",
+		  data: 'parfemi='+document.list.idparfema.value+'&kolicina='+kolicina+'&cena='+cena+'&nabavka='+nabavka,
+		  datatype: "html",
+		  success: function(msg){
+		   window.location.href = "preglednabavki.html";
+		  }
+          })
+		}
+	</script>
+
+
+</head>
+<body >
+
+<form action="" method="post" name="list" id="list" onsubmit="createNew(); return false;">  
+
+	<!-- page lista parfema -->
+	<div data-role="page" id="listaparfema">
+		<div data-role="header"  data-position="fixed" >
+				<h1>DaNi</h1>
+				
+				
+				<div data-role="navbar" data-iconpos="left">
+					<ul>
+						<li><a href="listakupaca.html" target="_self" data-icon="home"   data-transition="pop" >Home</a></li>
+						<li><a href="listaaktivnihkupaca.html"   data-icon="user" target="_self" data-transition="pop">Aktivni</a></li>
+						<li><a href="listavrstaparfema.html" target="_self" data-icon="shop"   >Parfemi</a></li>
+						<li><a href="preglednabavki.html" target="_self" data-icon="bars"  class="ui-btn-active">Nabavka</a></li>
+						<li><a href="crnalista.html" target="_self" data-icon="alert">Crna Lista</a></li>
+						<li><a href="rashod.html" target="_self" data-icon="info">Rashod</a></li>
+					</ul>
+				</div>
+				<a href="#opcijeparfem" data-rel="popup" data-position-to="window" data-role="button" data-inline="true" data-transition="slidedown" data-icon="gear" data-iconpos="right" class="ui-btn-right">Options</a>
+		</div><!-- /header -->
+		<div data-role="popup" id="opcijeparfem">
+				<ul data-role="listview" data-inset="true" data-theme="b">					
+					<li><a href="nabavkadobavljac.html" target="_self">Dodaj u lager</a></li>
+				</ul>
+		</div>
+		<div data-role="content" >
+			<input type="hidden" id="idparfema" name="idparfema" value=""/>
+			<input type="hidden" name="idvrste" id="idvrste" value="0">
+			<input type="hidden" name="idtipa" id="idtipa" value="0">
+			<input type="hidden" name="idnabavke" id="idnabavke" value="0">
+			<script>	
+				function getUrlVars() {
+						var vars = {};
+						var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,    
+						function(m,key,value) {
+						  vars[key] = value;
+						});
+						return vars;
+				}
+				var idvrste = getUrlVars()['idvrsta'];
+				document.list.idvrste.value=idvrste;
+				var idnabavke = getUrlVars()['id'];
+				document.list.idnabavke.value=idnabavke;
+				var idtipa = getUrlVars()['idtipa'];
+				document.list.idtipa.value=idtipa;
+				
+
+			</script>
+			<a href="javascript:history.back()"  data-role="button" data-rel="back" data-iconpos="right" data-theme="e" data-icon="back"  data-mini="true">NAZAD</a>
+			<input type="submit" value="UBACI U LAGER!" data-icon="plus" data-iconpos="right" data-mini="true" data-theme="e" ><br>
+			
+			<ul data-role="listview" id="listaparfemacontent"  data-inset="true" data-filter="true" data-filter-reveal="true" data-filter-placeholder="Pretrazivanje...">	
+			</ul>
+			
+
+
+			<script>
+					
+					$.ajax({ url: 'http://bonuscashfree.com/dani/parfempodaci.php',
+							 data: {action: 'get_all_parfumes_per_type',id:document.list.idvrste.value, tip:document.list.idtipa.value},	
+							 type: 'post',
+							 success: function(data) {
+										//alert(data);
+										var parfems = new Array();
+										
+										obj = JSON.parse(data);
+										var i = 0
+										
+										$('#listaparfemacontent').empty(); 
+										while(i<obj.length){
+											$('#listaparfemacontent').append('<li> <a href="listakupacaporudzbina.html?idparfema='+obj[i].id+'" target="_self" data-rel="dialog" data-position-to="window" data-transition="pop">'+obj[i].naziv+'<font color="red"> Porudzbina: '+obj[i].porudzbina+'</font></a><p><input type="number" name="kolicina'+obj[i].id+'" id="kolicina'+obj[i].id+'" placeholder="Kolicina" value=""><input type="number" name="cena'+obj[i].id+'" id="cena'+obj[i].id+'" placeholder="Cena" value=""></p></li>');	
+											parfems.push(obj[i].id);
+											i = i +1;
+											
+										}
+										document.list.idparfema.value = parfems;
+										$('#listaparfemacontent').trigger('create');
+										$('#listaparfemacontent').listview('refresh');
+
+										
+									  }
+					});
+
+			</script>
+		</div>
+
+		<div data-role="footer" data-position="fixed"  >
+			<p style="font-size:11px">Powered By ZK</p>				
+		</div><!-- /footer -->
+	</div><!-- /page lista parfema -->
+	
+
+
+</form>
+
+</body>
+</html>
