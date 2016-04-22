@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, follow">
+
+    <meta name="viewport" content="width=device-width, height=device-height">
+    <title>DANI</title>
+    <link rel="stylesheet"  href="css/themes/default/jquery.mobile-1.3.2.min.css">
+	<link rel="stylesheet" type="text/css" href="css/themes/default/jqm-datebox.min.css" /> 
+    <link rel="shortcut icon" href="demos/_assets/favicon.ico">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+    <script src="js/jquery.js"></script>
+	
+    <script src="js/jquery.mobile-1.3.2.min.js"></script>
+
+	<script type="text/javascript" src="js/jqm-datebox.core.min.js"></script>
+	<script type="text/javascript" src="js/jqm-datebox-1.1.0.mode.flipbox.js"> </script>
+	<script src="js/energize.js"></script>
+
+
+	<script>
+		
+		function createNew(idkorisnika,idparfema,cena,uplata,dug,sledecauplata)
+		{
+		
+		 $("input[id*=isporuceno-choice-]:checked").each(function() {
+			isporuceno = $(this).val();
+		 });
+		 
+
+		  $.ajax({
+		  type: "POST",
+		  url: "http://bonuscashfree.com/dani/prodaja.php",
+		  data:'idkorisnika='+idkorisnika+'&idparfema='+idparfema+'&cena='+cena+'&uplata='+uplata+'&dug='+dug+'&sledecauplata='+sledecauplata+'&isporuceno='+isporuceno,
+		  datatype: "html",
+		  success: function(msg){
+		   //alert(msg);
+		   obj = JSON.parse(msg);
+		   window.location.href = "kupac.html?id="+obj[1];
+		   //window.location.href = "index.html";
+		   
+		  }
+          })
+		}
+
+
+		function calculate(){
+			document.create.dug.value = document.create.cena.value - document.create.uplata.value;
+		}
+	</script>
+	
+
+</head>
+<body>
+
+<form action="" method="post" name="create" id="createForm" onsubmit="
+createNew(
+document.create.idkorisnika.value
+,document.create.idparfema.value
+,document.create.cena.value
+,document.create.uplata.value
+,document.create.dug.value
+,document.create.sledecauplata.value
+); " >        
+	
+
+	<!-- page porudzbina -->
+	<div data-role="page" id="porudzbina">
+		<div data-role="header" data-position="fixed" >
+			<h1>DaNi - Prodaja</h1>
+			
+			
+			<div data-role="navbar" data-iconpos="left">
+				<ul>
+					<li><a href="listakupaca.html"  target="_self" data-icon="home"   data-transition="pop" >Home</a></li>
+					<li><a href="listaaktivnihkupaca.html" target="_self" data-icon="user"   data-transition="pop" >Aktivni</a></li>
+					<li><a href="listavrstaparfema.html" target="_self" data-icon="shop" >Parfemi</a></li>
+					<li><a href="preglednabavki.html" target="_self" data-icon="bars">Nabavka</a></li>
+					<li><a href="crnalista.html" target="_self" data-icon="alert">Crna Lista</a></li>
+					<li><a href="rashod.html" target="_self" data-icon="info">Rashod</a></li>
+				</ul>
+			</div>
+			
+		</div><!-- /header -->
+		<div data-role="content" id="porudzbinacontent">
+			<input type="hidden" name="idkorisnika" id="idkorisnika" value="0">
+			
+			<input type="hidden" name="idparfema" id="idparfema" value="0">
+			<script>
+				
+				var d = new Date();
+				var month = d.getMonth() + 1;
+				var currentDate = d.getDate() + "." +month + "."+d.getFullYear();
+				//alert(currentDate);
+				
+
+				function getUrlVars() {
+						var vars = {};
+						var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,    
+						function(m,key,value) {
+						  vars[key] = value;
+						});
+						return vars;
+				}
+				var idkorisnika = getUrlVars()['idkorisnika'];
+				document.create.idkorisnika.value=idkorisnika;
+				var idparfema = getUrlVars()['idparfema'];
+				document.create.idparfema.value=idparfema;
+
+				if(!getUrlVars()['idkorisnika']) window.location.href = "index.html";
+
+			</script>
+			<ul data-role="listview">
+				
+				<li data-role="fieldcontain">
+					<label for="cena">Cena</label>
+					<input type="text" placeholder="EUR" name="cena" id="cena" value="">
+				</li>
+				<li data-role="fieldcontain">
+					<label for="uplata">Uplata</label>
+					<input type="text" placeholder="EUR" name="uplata" id="uplata" value="0">
+				</li>
+				<li data-role="fieldcontain">
+					<label for="dug">Dug</label>
+					<input type="text" onclick="calculate();" placeholder="Izracunaj" name="dug" id="dug" value="">
+				</li>
+				<li data-role="fieldcontain" style="display:none;">					
+					<fieldset data-role="controlgroup">
+							<legend>Predato korisniku:</legend>
+							<input type="radio" name="isporuceno" id="isporuceno-choice-3" value="1" checked="checked" data-mini="true"  />
+							<label for="isporuceno-choice-3">Da</label>
+
+							<input type="radio" name="isporuceno" id="isporuceno-choice-4" value="0"   data-mini="true"  />
+							<label for="isporuceno-choice-4">Ne</label>
+
+							<input type="radio" name="isporuceno" id="isporuceno-choice-5" value="2"   data-mini="true"  />
+							<label for="isporuceno-choice-5">Rezervisano</label>
+					</fieldset>
+				</li>
+				
+
+				<li data-role="fieldcontain">
+					<label for="sledecauplata">Sledeca uplata:</label>
+					<input type="text" name="sledecauplata" id="sledecauplata" placeholder="npr. 01.12.2014">
+				</li>
+				<script>
+					document.create.sledecauplata.value = currentDate;
+				</script>
+
+				
+			</ul>
+			<BR><BR>
+			<input type="submit" value="SACUVAJ" data-icon="plus" data-iconpos="right" data-mini="true" data-theme="e" >
+			
+				
+		</div>
+
+		<div data-role="footer" data-position="fixed"  >
+			<p style="font-size:11px">Powered By ZK</p>				
+		</div><!-- /footer -->
+	</div><!-- /page porudzbina -->
+
+	
+
+	
+</form>
+
+</body>
+</html>

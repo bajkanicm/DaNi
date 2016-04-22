@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, follow">
+
+    <meta name="viewport" content="width=device-width, height=device-height">
+
+    <title>DaNi</title>
+    <link rel="stylesheet"  href="css/themes/default/jquery.mobile-1.3.2.min.css">
+	<link rel="stylesheet" type="text/css" href="css/themes/default/jqm-datebox.min.css" /> 
+    <link rel="shortcut icon" href="demos/_assets/favicon.ico">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.mobile-1.3.2.min.js"></script>
+
+	<script type="text/javascript" src="js/jqm-datebox.core.min.js"></script>
+	<script type="text/javascript" src="js/jqm-datebox-1.1.0.mode.flipbox.js"> </script>
+	<script src="js/energize.js"></script>
+
+	<script>
+		
+		//create new parfume
+		function createNew(vrsta, vrednost, datum, opis)
+		{
+		
+		  $.ajax({
+		  type: "POST",
+		  url: "http://bonuscashfree.com/dani/settings.php",
+		  data: 'action=add_new_expense&vrsta='+vrsta+'&vrednost='+vrednost+'&datum='+datum+'&opis='+opis,
+		  datatype: "html",
+		  success: function(msg){
+		  // alert(msg);
+		   	window.location.href = "listavrstatroskova.html";
+		  }
+          })
+		}
+
+		
+
+		function getUrlVars() {
+			var vars = {};
+			var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,    
+			function(m,key,value) {
+			  vars[key] = value;
+			});
+			return vars;
+		}
+
+		
+		
+	</script>
+
+</head>
+<body >
+
+<form action="" method="post" name="create" id="createForm" 
+onsubmit="
+createNew(
+document.create.idvrste.value
+,document.create.vrednost.value
+,document.create.datum.value
+,document.create.opis.value
+); return false;">  
+
+
+	<!-- page parfem -->
+	<div data-role="page" id="parfem">
+		<div data-role="header"  data-position="fixed" >
+				<h1>DaNi</h1>
+				
+				
+				<div data-role="navbar" data-iconpos="left">
+					<ul>
+						<li><a href="listakupaca.html" target="_self" data-icon="home"   data-transition="pop" >Home</a></li>
+						<li><a href="listaaktivnihkupaca.html"   data-icon="user" target="_self" data-transition="pop">Aktivni</a></li>
+						<li><a href="listavrstaparfema.html" target="_self" data-icon="shop"   >Parfemi</a></li>
+						<li><a href="preglednabavki.html" target="_self" data-icon="bars">Nabavka</a></li>
+						<li><a href="crnalista.html" target="_self" data-icon="alert">Crna Lista</a></li>
+						<li><a href="rashod.html" target="_self" data-icon="info" class="ui-btn-active" >Rashod</a></li>
+					</ul>
+				</div>
+				<a href="#opcijetrosak" data-rel="popup" data-position-to="window" data-role="button" data-inline="true" data-transition="slidedown" data-icon="gear" data-iconpos="right" class="ui-btn-right">Options</a>
+		</div><!-- /header -->
+		<div data-role="popup" id="opcijetrosak">
+				<ul data-role="listview" data-inset="true" data-theme="b">					
+					<ul data-role="listview" data-inset="true" data-theme="b">					
+					<li><a href="dnevniizvestaj.html" target="_self">Dnevni Izvestaj</a></li>
+					<li><a href="listavrstatroskova.html" target="_self">Troskovi</a></li>				
+				</ul>
+				</ul>
+		</div>
+		<div data-role="content">
+						
+			<input type="hidden" name="idvrste" id="idvrste" value="0">
+			<script>
+				var id = getUrlVars()['idvrste'];
+				document.create.idvrste.value=id;
+				
+			</script>
+			<ul data-role="listview">
+				
+				<li data-role="fieldcontain">
+					<label for="vrednost">Vrednost:</label>
+					<input type="number" placeholder="EUR" name="vrednost" id="vrednost" >
+				</li>
+				<li data-role="fieldcontain">
+					<label for="datum">Datum:</label>
+					<input type="text" name="datum" id="datum" placeholder="npr. 01.12.2014">
+				</li>
+				<li data-role="fieldcontain">
+					<label for="opis">Opis:</label>
+					<input type="text" name="opis" id="opis" placeholder="Opis za razno...">
+				</li>
+			</ul>
+			<BR><BR>
+			<input type="submit" value="SACUVAJ" data-icon="plus" data-iconpos="right" data-mini="true" data-theme="e" >
+			<a href="rashod.html" target="_self" data-role="button" data-rel="back" data-iconpos="right" data-theme="e" data-icon="back"  data-mini="true">NAZAD</a>
+			
+		
+
+			
+			
+			
+			
+		</div><!-- /content -->
+
+		<div data-role="footer" data-position="fixed"  >
+			<p style="font-size:11px">Powered By ZK</p>				
+		</div><!-- /footer -->
+	</div><!-- /page parfem -->
+
+	
+
+
+</form>
+
+</body>
+</html>

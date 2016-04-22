@@ -1,0 +1,33 @@
+[22-Jul-2014 08:19:36 UTC] PHP Notice:  Undefined index: oddatuma in /home/dadaandnina/public_html/dani/parfempodaci.php on line 245
+[22-Jul-2014 08:19:36 UTC] PHP Notice:  Undefined index: dodatuma in /home/dadaandnina/public_html/dani/parfempodaci.php on line 249
+[22-Jul-2014 08:32:41 UTC] PHP Notice:  Undefined index: oddatuma in /home/dadaandnina/public_html/dani/parfempodaci.php on line 245
+[22-Jul-2014 08:32:41 UTC] PHP Notice:  Undefined index: dodatuma in /home/dadaandnina/public_html/dani/parfempodaci.php on line 249
+[22-Jul-2014 09:57:36 UTC] PHP Notice:  Undefined variable: idporudzbine in /home/dadaandnina/public_html/dani/prodaja.php on line 30
+[22-Jul-2014 10:06:15 UTC] PHP Notice:  Undefined index: idkorisnika in /home/dadaandnina/public_html/dani/korisnikpodaci.php on line 61
+[22-Jul-2014 10:06:15 UTC] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, boolean given in /home/dadaandnina/public_html/dani/korisnikpodaci.php on line 70
+[22-Jul-2014 10:28:06 UTC] PHP Notice:  Undefined index: idkorisnika in /home/dadaandnina/public_html/dani/korisnikpodaci.php on line 61
+[22-Jul-2014 10:28:06 UTC] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, boolean given in /home/dadaandnina/public_html/dani/korisnikpodaci.php on line 70
+[22-Jul-2014 10:31:51 UTC] PHP Notice:  Undefined variable: idporudzbine in /home/dadaandnina/public_html/dani/prodaja.php on line 30
+[22-Jul-2014 10:33:26 UTC] PHP Notice:  Undefined index: idkorisnika in /home/dadaandnina/public_html/dani/korisnikpodaci.php on line 61
+[22-Jul-2014 10:33:26 UTC] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, boolean given in /home/dadaandnina/public_html/dani/korisnikpodaci.php on line 70
+[22-Jul-2014 10:35:47 UTC] PHP Notice:  Undefined index: idkorisnika in /home/dadaandnina/public_html/dani/korisnikpodaci.php on line 61
+[22-Jul-2014 10:35:47 UTC] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, boolean given in /home/dadaandnina/public_html/dani/korisnikpodaci.php on line 70
+[22-Jul-2014 10:49:12 UTC] PHP Notice:  Undefined variable: idporudzbine in /home/dadaandnina/public_html/dani/prodaja.php on line 30
+[22-Jul-2014 11:08:32 UTC] PHP Notice:  Undefined index: idkorisnika in /home/dadaandnina/public_html/dani/korisnikpodaci.php on line 61
+[22-Jul-2014 11:08:32 UTC] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, boolean given in /home/dadaandnina/public_html/dani/korisnikpodaci.php on line 70
+[22-Jul-2014 11:12:34 UTC] PHP Notice:  Undefined variable: idporudzbine in /home/dadaandnina/public_html/dani/prodaja.php on line 30
+[22-Jul-2014 11:42:29 UTC] PHP Notice:  Undefined index: id in /home/dadaandnina/public_html/dani/parfempodaci.php on line 359
+[22-Jul-2014 11:42:29 UTC] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, boolean given in /home/dadaandnina/public_html/dani/parfempodaci.php on line 366
+[22-Jul-2014 11:53:41 UTC] PHP Notice:  Undefined index: idkorisnika in /home/dadaandnina/public_html/dani/korisnikpodaci.php on line 61
+[22-Jul-2014 11:53:41 UTC] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, boolean given in /home/dadaandnina/public_html/dani/korisnikpodaci.php on line 70
+[22-Jul-2014 11:57:40 UTC] PHP Notice:  Undefined index: idkorisnika in /home/dadaandnina/public_html/dani/korisnikpodaci.php on line 61
+[22-Jul-2014 11:57:40 UTC] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, boolean given in /home/dadaandnina/public_html/dani/korisnikpodaci.php on line 70
+[22-Jul-2014 12:07:24 UTC] PHP Notice:  Undefined index: idkorisnika in /home/dadaandnina/public_html/dani/korisnikpodaci.php on line 61
+[22-Jul-2014 12:07:24 UTC] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, boolean given in /home/dadaandnina/public_html/dani/korisnikpodaci.php on line 70
+[22-Jul-2014 15:15:45 UTC] PHP Notice:  Undefined index: idkorisnika in /home/dadaandnina/public_html/dani/korisnikpodaci.php on line 61
+[22-Jul-2014 15:15:45 UTC] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, boolean given in /home/dadaandnina/public_html/dani/korisnikpodaci.php on line 70
+[22-Jul-2014 15:17:27 UTC] PHP Notice:  Undefined index: idkorisnika in /home/dadaandnina/public_html/dani/korisnikpodaci.php on line 61
+[22-Jul-2014 15:17:27 UTC] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, boolean given in /home/dadaandnina/public_html/dani/korisnikpodaci.php on line 70
+[22-Jul-2014 15:57:18 UTC] PHP Notice:  Undefined index: idkorisnika in /home/dadaandnina/public_html/dani/korisnikpodaci.php on line 61
+[22-Jul-2014 15:57:18 UTC] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, boolean given in /home/dadaandnina/public_html/dani/korisnikpodaci.php on line 70
+[22-Jul-2014 16:50:27 UTC] PHP Notice:  Undefined variable: idporudzbine in /home/dadaandnina/public_html/dani/prodaja.php on line 30

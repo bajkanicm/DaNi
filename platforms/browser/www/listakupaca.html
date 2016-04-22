@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DaNi</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/themes/default/jquery.mobile-1.3.2.min.css">
+<script src="js/jquery.js"></script>
+<script src="js/jquery.mobile-1.3.2.min.js"></script>
+<script>
+	function getUrlVars() {
+			var vars = {};
+			var parts = decodeURIComponent(window.location.href).replace(/[?&]+([^=&]+)=([^&]*)/gi,    
+			function(m,key,value) {
+			  vars[key] = value;
+			});
+			return vars;
+		}
+		function fixedEncodeURIComponent(str){
+			 return decodeURIComponent(str).replace(/[!'()]/g, escape).replace(/\*/g, "%2A");
+		}
+</script>
+
+
+
+</head>
+
+<body>
+	
+<form action="" method="post" name="lista" id="lista">	
+
+	<div data-role="page" data-title="Home" id="mainPage" >
+		
+		 <div data-role="header"  data-position="fixed" >
+				<h1>DaNi - SVI</h1>
+				
+				
+				<div data-role="navbar" data-iconpos="left">
+					<ul>
+						<li><a href="listakupaca.html" target="_self" data-icon="home" class="ui-btn-active"  data-transition="pop" >Home</a></li>
+						<li><a href="listaaktivnihkupaca.html"   data-icon="user" target="_self" data-transition="pop">Aktivni</a></li>
+						<li><a href="listavrstaparfema.html" target="_self" data-icon="shop" >Parfemi</a></li>
+						<li><a href="preglednabavki.html" target="_self" data-icon="bars">Nabavka</a></li>
+						<li><a href="crnalista.html" target="_self" data-icon="alert">Crna Lista</a></li>
+						<li><a href="rashod.html" target="_self" data-icon="info">Rashod</a></li>
+					</ul>
+				</div>
+				<a href="#opcijekupac" data-rel="popup" data-position-to="window" data-role="button" data-inline="true" data-transition="slidedown" data-icon="gear" data-iconpos="right" class="ui-btn-right">Options</a>
+		</div><!-- /header -->
+
+		<div data-role="popup" id="opcijekupac" >
+			 
+				<ul data-role="listview" data-inset="true" data-theme="b">					
+					<li><a href="listakupaca.html" target="_self" class="ui-link-inherit" data-transition="pop">Lista Kupaca</a></li>
+					<li><a href="kupac.html" target="_self"  data-transition="pop">Dodaj Kupca</a></li>
+					<li><a href="listacrvena.html" target="_self" class="ui-link-inherit" data-transition="pop">Crvena Lista</a></li>
+					<li><a href="listapotencijalnihkupaca.html"  target="_self" class="ui-link-inherit" data-transition="pop">Potencijalni Kupci</a></li>
+				</ul>
+		</div>
+		
+
+		<div data-role="content">
+			<p>
+			<input type="text" id="searchField" placeholder="Pretraga svih korisnika ...">
+			<ul id="suggestions" data-role="listview" data-inset="true"></ul>
+			<script>
+				var firma = getUrlVars()['firma'];
+				if(firma) document.lista.searchField.value=firma;				
+			</script>
+			</p>
+		</div>
+		
+		<script>
+			$("#mainPage").on("pageshow", function(e) {
+					
+							console.log("Ready to bring the awesome.");
+							var sugList = $("#suggestions");
+							if(firma){
+								$.get("http://bonuscashfree.com/dani/listakorisnikaAUTO.php?action=get_all_users", {search:firma}, function(res,code) {										
+										var str = "";
+										for(var i=0, len=res.length; i<len; i++) {
+											if(res[i].problematican==1) color_ime = '<font color="red"> '+res[i].ime+'</font>';
+											else color_ime = '<font color="black"> '+res[i].ime+'</font>';
+											str += '<li><a href="kupac.html?id='+res[i].id+'" target="_self"><h2> '+color_ime+'</h2><p>Nadimak: <strong>'+res[i].nadimak+'</strong></p><p>Firma:<strong> '+res[i].firma+'</strong></p><span class="ui-li-count">Dug: '+res[i].dug+' EUR</span></a></li>';
+										}
+										sugList.html(str);
+										sugList.listview("refresh");
+										console.dir(res);
+									},"json");
+							}
+
+							$("#searchField").on("input", function(e) {
+								var text = $(this).val();
+								if(text.length < 3) {
+									sugList.html("");
+									sugList.listview("refresh");
+								} else {
+									$.get("http://bonuscashfree.com/dani/listakorisnikaAUTO.php?action=get_all_users", {search:text}, function(res,code) {
+										
+										var str = "";
+										for(var i=0, len=res.length; i<len; i++) {
+											if(res[i].problematican==1) color_ime = '<font color="red"> '+res[i].ime+'</font>';
+											else color_ime = '<font color="black"> '+res[i].ime+'</font>';
+											str += '<li><a href="kupac.html?id='+res[i].id+'" target="_self"><h2> '+color_ime+'</h2><p>Nadimak: <strong>'+res[i].nadimak+'</strong></p><p>Firma:<strong> '+res[i].firma+'</strong></p><span class="ui-li-count">Dug: '+res[i].dug+' EUR</span></a></li>';
+										}
+										sugList.html(str);
+										sugList.listview("refresh");
+										console.dir(res);
+									},"json");
+								}
+							});
+
+						});
+		</script>
+		
+
+		<div data-role="footer" data-position="fixed"  >
+			<p style="font-size:11px">Powered By ZK</p>				
+		</div><!-- /footer -->
+	</div>
+</form>	
+
+	
+
+</body>
+</html>
