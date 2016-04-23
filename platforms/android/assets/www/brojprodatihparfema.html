@@ -21,14 +21,12 @@
 			document.location.href='brojprodatihparfema.html?oddatuma='+document.brojparfema.oddatuma.value+'&dodatuma='+document.brojparfema.dodatuma.value;
 
 		}
-	
-
 		
 	</script>
 </head>
 <body >
 
-<form action="" method="post" name="brojparfema" id="brojparfema" onsubmit="getReport();return false;" >  
+<form action="" method="post" name="brojparfema" id="brojparfema">  
 	
 
 	<!-- page lista parfema -->
@@ -36,8 +34,7 @@
 		
 		<div data-role="header"  data-position="fixed" >
 				<h1>DaNi</h1>
-				
-				
+					
 				<div data-role="navbar" data-iconpos="left">
 					<ul>
 						<li><a href="listakupaca.html" target="_self" data-icon="home"   data-transition="pop" >Home</a></li>
@@ -62,9 +59,7 @@
 		</div>
 		
 		<div data-role="content" id="listaparfemacontent">
-			<ul data-role="listview">
-				
-				
+			<ul data-role="listview">	
 				<li data-role="fieldcontain">
 					<label for="oddatuma">OD Datuma:</label>
 					<input type="text" placeholder="npr. 01.12.2014" name="oddatuma" id="oddatuma" value="">
@@ -73,66 +68,13 @@
 					<label for="dodatuma">DO Datuma:</label>
 					<input type="text" placeholder="npr. 31.12.2014" name="dodatuma" id="dodatuma" value="">
 				</li>
-				
 				<input type="submit" value="PRIKAZI" data-icon="info" data-iconpos="right" data-mini="true" data-theme="e" >
 				<ul data-role="listview" id="pretragaparfema"  data-inset="true" >
 				</ul>
-
 				<ul data-role="listview" id="prodatiparfemi"  data-inset="true" data-filter="true" data-filter-reveal="true" data-filter-placeholder="Pretrazivanje...">
 				</ul>
-				<script>
-					
-					/*function getUrlVars() {
-						var vars = {};
-						var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,    
-						function(m,key,value) {
-						  vars[key] = value;
-						});
-						return vars;
-					}*/
-
-					function getUrlVars() {
-						var vars = {};
-						var parts = decodeURIComponent(window.location.href).replace(/[?&]+([^=&]+)=([^&]*)/gi,    
-						function(m,key,value) {
-						  vars[key] = value;
-						});
-						return vars;
-					}
-
-
-					
-					var oddatuma = getUrlVars()['oddatuma'];
-					var dodatuma = getUrlVars()['dodatuma'];
-					$.ajax({ url: 'parfempodaci.php',
-							 data: {action: 'get_all_parfumes_sold',oddatuma:getUrlVars()['oddatuma'] ,dodatuma:getUrlVars()['dodatuma']},	
-							 type: 'post',
-							 success: function(data) {
-										//alert(data);
-										obj = JSON.parse(data);
-										var i = 0;
-										$('#prodatiparfemi').empty(); 
-											while(i<obj.length){
-												if(obj[i].idtipa>1) color = 'red';
-												else color='blue';
-												$('#prodatiparfemi').append('<li><p><h2>Parfem:<font color="'+color+'">'+obj[i].naziv+'</font></p></h2><p>Kupac: '+obj[i].ime+'</p><p>Nadimak: '+obj[i].nadimak+'</p><p>Firma: '+obj[i].firma+'</p><p>Datum: '+obj[i].datum+'</p></li>');		
-												i = i +1;
-											}
-											
-											$('#prodatiparfemi').listview('refresh');
-											$('#pretragaparfema').empty();
-											$('#pretragaparfema').append('<li>Prodato parfema:'+i+'</li>');
-											$('#pretragaparfema').listview('refresh');
-										}
-									 
-					  });
-							
-				</script>
-				
 			</ul>
 			<br><br>
-			
-			
 		</div>
 
 		<div data-role="footer" data-position="fixed"  >
@@ -143,6 +85,73 @@
 
 
 </form>
+
+<script>
+	$( "#brojparfema" ).ready(function () {
+		var $form = $( this ),
+	    oddatuma = $form.find( "input[name='oddatuma']" ).val(),
+	    dodatuma = $form.find( "input[name='dodatuma']" ).val(),
+	    url = 'http://bonuscashfree.com/dani/parfempodaci.php';
+	    action = 'get_all_parfumes_sold';
+
+		$.ajax({ 
+			url: url,
+			data: {action: action, oddatuma: oddatuma, dodatuma:dodatuma},	
+			type: 'post',
+			success: function(data) {
+				//alert(data);
+				obj = JSON.parse(data);
+				var i = 0;
+				$('#prodatiparfemi').empty(); 
+				while(i<obj.length) {
+					if(obj[i].idtipa>1) color = 'red';
+					else color='blue';
+					$('#prodatiparfemi').append('<li><p><h2>Parfem:<font color="'+color+'">'+obj[i].naziv+'</font></p></h2><p>Kupac: '+obj[i].ime+'</p><p>Nadimak: '+obj[i].nadimak+'</p><p>Firma: '+obj[i].firma+'</p><p>Datum: '+obj[i].datum+'</p></li>');		
+					i = i +1;
+				}
+				$('#prodatiparfemi').listview('refresh');
+				$('#pretragaparfema').empty();
+				$('#pretragaparfema').append('<li>Prodato parfema:'+i+'</li>');
+				$('#pretragaparfema').listview('refresh');
+			}
+		});
+	});
+	
+	$( "#brojparfema" ).submit(function( event ) {
+		// Stop form from submitting normally
+		event.preventDefault();
+	 
+		// Get some values from elements on the page:
+		var $form = $( this ),
+	    oddatuma = $form.find( "input[name='oddatuma']" ).val(),
+	    dodatuma = $form.find( "input[name='dodatuma']" ).val(),
+	    url = 'http://bonuscashfree.com/dani/parfempodaci.php';
+	    action = 'get_all_parfumes_sold';
+	 
+		// Send the data using post
+	  	var posting = $.post( url, { action: action, oddatuma: oddatuma, dodatuma: dodatuma } );
+	 
+	 	// Put the results in a div
+		posting.done(function( data ) {
+	    	obj = JSON.parse(data);
+			var i = 0;
+			$('#prodatiparfemi').empty(); 
+			while(i<obj.length){
+				if(obj[i].idtipa>1) color = 'red';
+				else color='blue';
+				$('#prodatiparfemi').append('<li><p><h2>Parfem:<font color="'+color+'">'+obj[i].naziv+'</font></p></h2><p>Kupac: '+obj[i].ime+'</p><p>Nadimak: '+obj[i].nadimak+'</p><p>Firma: '+obj[i].firma+'</p><p>Datum: '+obj[i].datum+'</p></li>');		
+				i = i +1;
+			}
+											
+			$('#prodatiparfemi').listview('refresh');
+			$("#pretragaparfema").empty();
+			$("#pretragaparfema").append('<li>Prodato parfema:'+i+'</li>');
+			$("#pretragaparfema").listview('refresh');
+		});
+
+		return false;
+	  });					
+</script>
 
 </body>
 </html>
