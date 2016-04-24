@@ -71,7 +71,7 @@
 										
 										$('#pretragaparfema').empty(); 
 										while(i<obj.length){
-											$('#pretragaparfema').append('<li><a href="listatipparfema.html?idvrsta='+obj[i].id+'" target="_self">'+obj[i].vrsta+' </a></li>');		
+											$('#pretragaparfema').append('<li><a href="listatipparfema.html?idvrsta='+obj[i].id+'" target="_self">'+obj[i].vrsta+' <span class="ui-li-count">Ukupno: '+obj[i].total+'</span></a></li>');		
 											i = i +1;
 										}
 										
